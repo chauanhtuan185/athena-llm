@@ -8,10 +8,11 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const PORT_FRONT_END = process.env.PORT || 3000;
 
-// Thêm middleware CORS
+// Add CORS middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // URL của frontend
+  origin: `http://localhost:${PORT_FRONT_END}`, // Frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

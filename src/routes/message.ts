@@ -5,18 +5,18 @@ const handler = express.Router();
 
 handler.post("/process", async (req: Request, res: Response): Promise<any>=> {
    try {
-    // Lấy dữ liệu từ body
+    // Retrieve data from body
     const { messages, maxTokens } = req.body;
 
-    // // Kiểm tra tính hợp lệ
+    // // Validate
     // if (!messages || !Array.isArray(messages)) {
-    //   return res.status(400).json({ error: "'messages' phải là một mảng." });
+    //   return res.status(400).json({ error: "'messages' must be an array." });
     // }
 
-    // Gọi hàm xử lý logic của bạn
+    // Call your logic processing function
     const response = await sendMessage({ messages, maxTokens });
 
-    // Trả về kết quả
+    // Return the result
     res.json(response);
   } catch (error) {
     console.error(error);
