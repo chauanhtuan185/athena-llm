@@ -23,7 +23,12 @@ function sendMessage(_a) {
         console.log(messages);
         const completion = yield openai.chat.completions.create({
             model: "gpt-4o-mini",
-            messages: messages,
+            messages: [
+                {
+                    role: "user",
+                    content: messages[0].content
+                }
+            ],
             tools: [
                 {
                     type: "function",
@@ -64,14 +69,14 @@ function sendMessage(_a) {
         });
         const toolCall = (_b = completion.choices[0].message.tool_calls) === null || _b === void 0 ? void 0 : _b[0];
         if (!toolCall) {
-            console.log("No tool call", completion.choices[0].message.content);
+            console.log("(No tool call)", completion.choices[0].message.content);
             return {
                 explanation: completion.choices[0].message.content || "Transfer rejected",
                 decision: false,
             };
         }
         const args = JSON.parse(toolCall.function.arguments);
-        console.log("Tool call", toolCall.function.name, args);
+        console.log("(Tool call)", toolCall.function.name, args);
         return {
             explanation: args.explanation,
             decision: toolCall.function.name === "approveTransfer",
